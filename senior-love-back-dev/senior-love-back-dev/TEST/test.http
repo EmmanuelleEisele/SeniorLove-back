@@ -1,0 +1,68 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoibWFyaW5lLmFkbWluQGV4YW1wbGUuY29tIiwicHNldWRvIjoibWFyaW5lQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDczODAzODgsImV4cCI6MTc0NzQ2Njc4OH0.aJ0gFzdLVY-bDOOo9F5sBklBfn027B6hNQY0gI3iHtQ
+POST http://localhost:3000/register
+content-type: application/json
+
+{
+    "pseudo": "Alanues",
+    "email": "Alan@example.com",
+    "password": "alanpass",
+    "confirmPassword": "alanpass",
+    "birth_date": "1960-05-04"
+}
+
+#fin
+###
+POST http://marineligny-server.eddi.cloud/login
+content-type: application/json
+
+{
+    "email": "alain69@example.com",
+    "password": "alainpass"
+}
+
+#fin
+###
+
+PATCH http://localhost:3000/myprofile
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{   
+    "city": "Beauvais"
+}
+
+#fin
+###
+
+GET http://localhost:3000/myprofile
+content-type: application/json
+Authorization: Bearer {{token}}
+
+#fin
+###
+
+GET http://localhost:3000/profile/claudine60
+content-type: application/json
+Authorization: Bearer {{token}}
+
+#fin
+###
+
+GET http://marineligny-server.eddi.cloud/messaging
+Authorization: Bearer {{token}}
+#fin
+###
+
+GET http://marineligny-server.eddi.cloud/message/9
+content-type: application/json
+Authorization: Bearer {{token}}
+#fin
+###
+
+POST http://marineligny-server.eddi.cloud/message/9
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": " ' / > "
+}
