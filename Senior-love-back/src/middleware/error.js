@@ -16,3 +16,9 @@ export class NotFoundError extends Error {
       this.name = "ConflictError";
     }
   }
+    export class ForbiddenError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "ForbiddenError";
+    }
+  }

@@ -9,9 +9,13 @@ export const  errorMiddleware = (error, _, res , __)=>{
         return res.status(404).json({message: error.message})
     }
 
-      //Gestion des confilts de requetes 
+    //Gestion des confilts de requetes 
     if(error.name === "ConflictError"){
         return res.status(409).json({message: error.message})
+    }
+    //Gestion des requetes interdites
+    if(error.name === "ForbiddenError"){
+        return res.status(403).json({message: error.message})
     }
     //Gestion de toutes les autres erreurs
     return res.status(500).json({message: 'Une erreur inattendue est survenue.'})

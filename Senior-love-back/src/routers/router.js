@@ -24,11 +24,17 @@ router.get('/', (req, res) => {
 router.route('/login')
       .post(validate(connexionSchema), connexionController.login)
 
+// LOGOUT
+router.post("/logout", logoutController.logout);
+
+// Refresh Token
+router.post('/refresh-token', refreshTokenController.refresh);
+
 // Validation de l'inscription
 router.route('/register')
-      .post(validate(createUserSchema), connexionController.create)
+      .post(validate(createUserSchema), connexionController.register)
 
-//Page mon profil 
+// Page mon profil 
 router.route('/myprofile')
       .get(authenticate, profileController.getMyProfile)
       .patch(authenticate, upload.single('profile_picture'), profileController.updateOne) // -> modification du profil utilisateur
