@@ -28,9 +28,7 @@ export const connexionController = {
 
       const payload = {
         id: user.id,
-        email: user.email,
         pseudo: user.pseudo,
-        role: user.role,
       };
       // Token
       const token = generateToken(payload);
@@ -40,6 +38,15 @@ export const connexionController = {
       await RefreshToken.destroy({ where: { userId: user.id } });
       // Stocker le refresh token en base
       await RefreshToken.create({ token: refreshToken, userId: user.id });
+      
+      //on envoi le token en httpOnly cookie
+      const isProd = process.env.NODE_ENV === 'production';
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: 'Strict',              //protège contre les csrf
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+      });
 
       return res.status(200).json({
         message: "Connexion réussie",
@@ -50,7 +57,7 @@ export const connexionController = {
           role: user.role,
         },
         token,
-        refreshToken,
+        //on envoie pas le refreshtoken car il est déja envoyé dans le cookie
       });
     } catch (error) {
       console.log(error);
@@ -136,17 +143,26 @@ export const connexionController = {
       await RefreshToken.destroy({ where: { userId: newUser.id } });
       //Créer le token
       await RefreshToken.create({ token: refreshToken, userId: newUser.id });
+      
+      //on envoi le token en httpOnly cookie
+      const isProd = process.env.NODE_ENV === 'production';
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: 'Strict',              //protège contre les csrf
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+      });
 
       res.status(201).json({
         message: "Inscription réussie",
-        user: {               //On envoie que ce qui est sécurisé 
+        user: {                          //On envoie que ce qui est sécurisé 
           id: newUser.id,
           email: newUser.email,
           pseudo: newUser.pseudo,
           role: newUser.role,
         },
-        token,
-        refreshToken,
+        token, 
+        //on envoie pas le refreshtoken car il est déja envoyé dans le cookie
       });
     } catch (error) {
       console.log(error);
@@ -162,6 +178,14 @@ export const connexionController = {
       }
 
       await RefreshToken.destroy({ where: { token: refreshToken } });
+
+      // Supprimer le cookie côté client
+      const isProd = process.env.NODE_ENV === 'production'
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: 'Strict',
+      });
 
       return res.status(200).json({ message: "Déconnexion réussie" });
     } catch (error) {
