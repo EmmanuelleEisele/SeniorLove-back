@@ -1,4 +1,4 @@
-import sequelize from './sequelize';
+import {sequelize} from './sequelize.js';
 import {Model, DataTypes} from "sequelize";
 
 export class RefreshToken extends Model{};
@@ -12,4 +12,8 @@ RefreshToken.init({
     type: DataTypes.INTEGER,
     allowNull: false,
   }
+},
+{
+  sequelize, 
+  modelName:'RefreshToken'
 })

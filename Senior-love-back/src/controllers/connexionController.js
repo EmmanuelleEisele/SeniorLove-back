@@ -171,7 +171,8 @@ export const connexionController = {
   },
   async logout(req, res, next) {
     try {
-      const { refreshToken } = req.body;
+      console.log("Cookies reçus:", req.cookies);
+      const refreshToken  = req.cookies.refreshToken;
 
       if (!refreshToken) {
         return next(new BadRequestError("Refresh token manquant"));
@@ -180,11 +181,12 @@ export const connexionController = {
       await RefreshToken.destroy({ where: { token: refreshToken } });
 
       // Supprimer le cookie côté client
-      const isProd = process.env.NODE_ENV === 'production'
+      //const isProd = process.env.NODE_ENV === 'production'
       res.clearCookie('refreshToken', {
         httpOnly: true,
-        secure: isProd,
+        secure:  false,//isProd,
         sameSite: 'Strict',
+        maxAge: 24 * 60 * 60 * 1000, // durée de vie cookie
       });
 
       return res.status(200).json({ message: "Déconnexion réussie" });

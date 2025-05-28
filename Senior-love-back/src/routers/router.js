@@ -12,6 +12,7 @@ import { createEventSchema, updateEventSchema } from "../schemas/event.schema.js
 import { upload } from '../middleware/upload.js';
 import { messageController } from "../controllers/messageController.js";
 import { createMessageSchema } from "../schemas/message.schema.js";
+import { refreshTokenController } from "../controllers/refreshTokencontroller.js";
 
 export const router = new Router();
 
@@ -25,7 +26,7 @@ router.route('/login')
       .post(validate(connexionSchema), connexionController.login)
 
 // LOGOUT
-router.post("/logout", logoutController.logout);
+router.post("/logout", connexionController.logout);
 
 // Refresh Token
 router.post('/refresh-token', refreshTokenController.refresh);

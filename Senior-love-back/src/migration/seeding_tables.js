@@ -1,6 +1,7 @@
 import { sequelize } from '../models/sequelize.js';
 import { Activity, User, Event, Category, Localisation, Conversation } from '../models/association.js';
 import argon2 from "argon2"; // Import d'argon2
+import { RefreshToken } from '../models/RefreshToken.js';
 
 const initialInterets = {
   "Loisirs": {
@@ -69,7 +70,7 @@ const initialInterets = {
   }
 };
 
-
+await RefreshToken.sync();
 console.log("🔄 SeniorLoveBase seeding started...");
 
 // Fonction utilitaire pour hasher un mot de passe avec argon2
