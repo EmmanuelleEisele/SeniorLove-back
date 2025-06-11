@@ -33,6 +33,7 @@ router.route('/register')
 router.route('/myprofile')
       .get(authenticate, profileController.getMyProfile)
       .patch(authenticate, upload.single('profile_picture'), profileController.updateOne) // -> modification du profil utilisateur
+      .delete(authenticate, profileController.deleteUser) // -> suppression du profil utilisateur
 
 // Page profil public
 router.route('/profile/:pseudo')

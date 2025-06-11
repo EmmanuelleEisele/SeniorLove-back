@@ -1,4 +1,5 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoibWFyaW5lLmFkbWluQGV4YW1wbGUuY29tIiwicHNldWRvIjoibWFyaW5lQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDczODAzODgsImV4cCI6MTc0NzQ2Njc4OH0.aJ0gFzdLVY-bDOOo9F5sBklBfn027B6hNQY0gI3iHtQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiQWxhbkBleGFtcGxlLmNvbSIsInBzZXVkbyI6IkFsYW51ZXMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0OTY2MTg3NiwiZXhwIjoxNzQ5NzQ4Mjc2fQ.XggvEQUR5baYDTLwmtXwBa80_L-fpBLoEHceB8BmjTA
+
 POST http://localhost:3000/register
 content-type: application/json
 
@@ -12,12 +13,12 @@ content-type: application/json
 
 #fin
 ###
-POST http://marineligny-server.eddi.cloud/login
+POST http://localhost:3000/login
 content-type: application/json
 
 {
-    "email": "alain69@example.com",
-    "password": "alainpass"
+    "email": "Alan@example.com",
+    "password": "alanpass"
 }
 
 #fin
@@ -66,3 +67,12 @@ Authorization: Bearer {{token}}
 {
     "content": " ' / > "
 }
+
+#fin
+###
+
+DELETE http://localhost:3000/myprofile
+content-type: application/json
+Authorization: Bearer {{token}}
+#fin
+###

@@ -13,7 +13,10 @@ export const profileController = {
                 // On peut ajouter d'autres filtres si nécessaire
             };
             if (localisation) {
-                whereFiltre[Op.or] = [
+                whereFiltre[Op.or] = [ // <-- on utilise Op.or pour filtrer par ville ou département
+                    // On utilise $localisation.city$ et $localisation.department$ pour accéder aux attributs de la localisation
+                    // On utilise Op.iLike pour une recherche insensible à la casse
+                    // On utilise % pour faire une recherche partielle
 					{ "$localisation.city$": { [Op.iLike]: `%${localisation}%` } }, 
 					{ "$localisation.department$": { [Op.iLike]: `%${localisation}%` } }
 				];
@@ -235,4 +238,54 @@ export const profileController = {
             res.status(500).json({ message: "Erreur Serveur" });
         }
     },
+    //fonction pour supprimer mon profil avec le token
+    async deleteUser(req, res, next) {
+    try {
+      const profileId = Number(req.user.id);
+
+      const user = await User.findByPk(profileId, {
+        attributes: {
+          exclude: ["password", "role"],
+        },
+        include: [
+          {
+            model: Localisation,
+            as: "localisation", //alias défini dans l'association à utiliser pour que la fonction marche
+            attributes: ["city", "department"],
+          },
+          {
+            model: Event,
+            as: "events", //alias défini dans l'association à utiliser pour que la fonction marche
+          },
+          {
+            model: Activity,
+            as: "activities",
+            include: [
+              {
+                model: Category,
+                as: "category",
+                attributes: ["id", "name"],
+              },
+            ],
+          },
+        ],
+      });
+
+            if(!user){
+                return next(new NotFoundError("Event not found"));
+            }
+            //Supprimer les associations
+            await user.setActivities([]);
+            await user.setEvents([]);
+            await user.setLocalisation(null);
+
+            //supprimer l'utilisateur
+            await user.destroy();
+
+            res.status(200).json({ message: 'Utilisateur supprimé avec succès.' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Erreur Serveur" });
+    }
+  },
 };
