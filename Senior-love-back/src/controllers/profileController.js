@@ -13,13 +13,14 @@ export const profileController = {
                 // On peut ajouter d'autres filtres si nécessaire
             };
             if (localisation) {
-                whereFiltre[Op.or] = [ // <-- on utilise Op.or pour filtrer par ville ou département
+                whereFiltre[Op.or] = [
+                    // <-- on utilise Op.or pour filtrer par ville ou département
                     // On utilise $localisation.city$ et $localisation.department$ pour accéder aux attributs de la localisation
                     // On utilise Op.iLike pour une recherche insensible à la casse
                     // On utilise % pour faire une recherche partielle
-					{ "$localisation.city$": { [Op.iLike]: `%${localisation}%` } }, 
-					{ "$localisation.department$": { [Op.iLike]: `%${localisation}%` } }
-				];
+                    { "$localisation.city$": { [Op.iLike]: `%${localisation}%` } },
+                    { "$localisation.department$": { [Op.iLike]: `%${localisation}%` } },
+                ];
             }
             const users = await User.findAll({
                 where: whereFiltre,
@@ -130,7 +131,7 @@ export const profileController = {
         }
     },
     //fonction pour modifier mon profil avec le token
-    async updateOne(req, res) {
+    async updateOne(req, res, next) {
         try {
             const profileId = Number(req.user.id);
             const user = await User.findByPk(profileId, {
@@ -162,7 +163,7 @@ export const profileController = {
             });
 
             const inputData = req.body;
-            const { city, department, activities, ...userData } = inputData;
+            const { city, activities, ...userData } = inputData;
 
             // Gérer la localisation uniquement si city + department sont modifiés
             if (city) {
@@ -240,38 +241,38 @@ export const profileController = {
     },
     //fonction pour supprimer mon profil avec le token
     async deleteUser(req, res, next) {
-    try {
-      const profileId = Number(req.user.id);
+        try {
+            const profileId = Number(req.user.id);
 
-      const user = await User.findByPk(profileId, {
-        attributes: {
-          exclude: ["password", "role"],
-        },
-        include: [
-          {
-            model: Localisation,
-            as: "localisation", //alias défini dans l'association à utiliser pour que la fonction marche
-            attributes: ["city", "department"],
-          },
-          {
-            model: Event,
-            as: "events", //alias défini dans l'association à utiliser pour que la fonction marche
-          },
-          {
-            model: Activity,
-            as: "activities",
-            include: [
-              {
-                model: Category,
-                as: "category",
-                attributes: ["id", "name"],
-              },
-            ],
-          },
-        ],
-      });
+            const user = await User.findByPk(profileId, {
+                attributes: {
+                    exclude: ["password", "role"],
+                },
+                include: [
+                    {
+                        model: Localisation,
+                        as: "localisation", //alias défini dans l'association à utiliser pour que la fonction marche
+                        attributes: ["city", "department"],
+                    },
+                    {
+                        model: Event,
+                        as: "events", //alias défini dans l'association à utiliser pour que la fonction marche
+                    },
+                    {
+                        model: Activity,
+                        as: "activities",
+                        include: [
+                            {
+                                model: Category,
+                                as: "category",
+                                attributes: ["id", "name"],
+                            },
+                        ],
+                    },
+                ],
+            });
 
-            if(!user){
+            if (!user) {
                 return next(new NotFoundError("Event not found"));
             }
             //Supprimer les associations
@@ -282,10 +283,10 @@ export const profileController = {
             //supprimer l'utilisateur
             await user.destroy();
 
-            res.status(200).json({ message: 'Utilisateur supprimé avec succès.' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Erreur Serveur" });
-    }
-  },
+            res.status(200).json({ message: "Utilisateur supprimé avec succès." });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Erreur Serveur" });
+        }
+    },
 };

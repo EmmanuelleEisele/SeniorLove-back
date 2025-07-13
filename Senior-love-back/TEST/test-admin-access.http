@@ -36,13 +36,14 @@ Content-Type: application/json
 }
 
 ### 3. Test modification d'événement avec token admin (devrait fonctionner)
-PATCH {{baseUrl}}/events/8
+PATCH {{baseUrl}}/events/9
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
     "name": "Événement modifié par admin",
-    "description": "Description modifiée"
+    "description": "Description modifiée",
+    "city": "Toulouse"
 }
 
 ### 4. Test modification d'événement avec token utilisateur normal (devrait échouer)
