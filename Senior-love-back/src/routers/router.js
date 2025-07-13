@@ -58,7 +58,7 @@ router.route ('/message/:id')
 router.route('/events/:id')
       .get(authenticate, validateIdParam, eventController.getOne)
       .post(authenticate, validateIdParam, eventController.addUserToEvent) // Inscription a un évènement
-      .patch(authenticate,validate(updateEventSchema), isAdmin, validateIdParam, eventController.update) // Modification d'un evenement - si admin
+      .patch(authenticate, validate(updateEventSchema), isAdmin, validateIdParam, eventController.update) // Modification d'un evenement - si admin
       .delete(authenticate, isAdmin, validateIdParam, eventController.delete) // suppression d'un evenement - si admin
 
 

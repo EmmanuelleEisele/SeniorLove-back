@@ -1,74 +1,72 @@
-import { sequelize } from '../models/sequelize.js';
-import { Activity, User, Event, Category, Localisation, Conversation } from '../models/association.js';
+import { Activity, User, Event, Category, Localisation, Conversation } from "../models/association.js";
 import argon2 from "argon2"; // Import d'argon2
 
 const initialInterets = {
-  "Loisirs": {
-    "Atelier tricot": false,
-    "Peinture sur soie": false,
-    "Scrapbooking": false,
-    "Lecture": false,
-    "Peinture": false,
-    "Création bijoux": false,
-    "Photographie": false,
-    "Poterie": false,
-    "Cuisine": false
-  },
-  "Culture": {
-    "Visite de musée": false,
-    "Conférence historique": false,
-    "Projection de film ancien": false,
-    "Cinéma": false,
-    "Théâtre": false
-  },
-  "Sport": {
-    "Gym douce": false,
-    "Aquagym": false,
-    "Randonnée": false,
-    "Marche rapide": false,
-    "Danse": false,
-    "Vélo": false
-  },
-  "Bien-être": {
-    "Séance de relaxation": false,
-    "Massage assis": false,
-    "Yoga": false,
-    "Pilate": false,
-    "Sophrologie": false,
-    "Cures thermales": false
-  },
-  "Style de vie": {
-    "Voyage": false,
-    "Proche de ma famille": false,
-    "Vie simple": false,
-    "A la recherche de l'amour": false,
-    "Sorties entre amis": false,
-    "Bénévolat": false,
-    "Curieux": false
-  },
-  "Jeux": {
-    "Tournoi de belote": false,
-    "Scrabble": false,
-    "Bingo": false,
-    "Bridge": false,
-    "Mots croisés": false,
-    "Sudoku": false,
-    "Puzzles": false
-  },
-  "Musique": {
-    "Chorale": false,
-    "Classique": false,
-    "Jazz": false,
-    "Rock": false
-  },
-  "Nature": {
-    "Balade au parc": false,
-    "Jardinage": false,
-    "Visite de parcs naturels": false,
-    "Amoureux des animaux": false
-  }
+    Loisirs: {
+        "Atelier tricot": false,
+        "Peinture sur soie": false,
+        Scrapbooking: false,
+        Lecture: false,
+        Peinture: false,
+        "Création bijoux": false,
+        Photographie: false,
+        Poterie: false,
+        Cuisine: false,
+    },
+    Culture: {
+        "Visite de musée": false,
+        "Conférence historique": false,
+        "Projection de film ancien": false,
+        Cinéma: false,
+        Théâtre: false,
+    },
+    Sport: {
+        "Gym douce": false,
+        Aquagym: false,
+        Randonnée: false,
+        "Marche rapide": false,
+        Danse: false,
+        Vélo: false,
+    },
+    "Bien-être": {
+        "Séance de relaxation": false,
+        "Massage assis": false,
+        Yoga: false,
+        Pilate: false,
+        Sophrologie: false,
+        "Cures thermales": false,
+    },
+    "Style de vie": {
+        Voyage: false,
+        "Proche de ma famille": false,
+        "Vie simple": false,
+        "A la recherche de l'amour": false,
+        "Sorties entre amis": false,
+        Bénévolat: false,
+        Curieux: false,
+    },
+    Jeux: {
+        "Tournoi de belote": false,
+        Scrabble: false,
+        Bingo: false,
+        Bridge: false,
+        "Mots croisés": false,
+        Sudoku: false,
+        Puzzles: false,
+    },
+    Musique: {
+        Chorale: false,
+        Classique: false,
+        Jazz: false,
+        Rock: false,
+    },
+    Nature: {
+        "Balade au parc": false,
+        Jardinage: false,
+        "Visite de parcs naturels": false,
+        "Amoureux des animaux": false,
+    },
 };
-
 
 console.log("🔄 SeniorLoveBase seeding started...");
 
@@ -93,9 +91,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/papi-nature.jpg",
         description: "J'aime la nature, les balades à vélo et les bons repas.",
         role: "user",
-        interest: jeanActivity
-      },
-      {
+        interest: jeanActivity,
+    },
+    {
         pseudo: "marie62",
         email: "marie62@example.com",
         firstname: "Marie",
@@ -106,9 +104,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/mamie_joie.jpg",
         description: "Amoureuse de la lecture, du jardinage et des chats 🐱.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "paul77",
         email: "paul77@example.com",
         firstname: "Paul",
@@ -119,9 +117,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/pepe-canne.jpg",
         description: "Retraité actif, je cherche une compagne pour partager des voyages et des moments conviviaux.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "claudine60",
         email: "claudine60@example.com",
         firstname: "Claudine",
@@ -132,9 +130,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/mamie-gourmande.jpg",
         description: "Passionnée de peinture et de cuisine, je cherche quelqu'un pour discuter et partager.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "jeanluc64",
         email: "jeanluc64@example.com",
         firstname: "Jean-Luc",
@@ -145,9 +143,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/al-capone.jpg",
         description: "Un amoureux des grands espaces et de la randonnée. Je cherche une partenaire pour profiter de la vie.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "monique68",
         email: "monique68@example.com",
         firstname: "Monique",
@@ -158,9 +156,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/mamie-hippy.jpg",
         description: "Veuve depuis quelques années, je cherche à rencontrer quelqu'un pour partager des moments de joie.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "georges71",
         email: "georges71@example.com",
         firstname: "Georges",
@@ -171,9 +169,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/papi-fatigue.jpg",
         description: "Ancien ingénieur, je suis passionné de musique classique et de voyages.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "bernadette66",
         email: "bernadette66@example.com",
         firstname: "Bernadette",
@@ -184,9 +182,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/mamie-velo.jpg",
         description: "J'aime la photographie, la danse et passer du temps avec mes amis.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "alain69",
         email: "alain69@example.com",
         firstname: "Alain",
@@ -197,9 +195,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/papi-80.jpg",
         description: "Amateur de bonne cuisine et de films anciens, je cherche une personne simple et joyeuse.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "pierrette59",
         email: "pierrette59@example.com",
         firstname: "Pierrette",
@@ -210,9 +208,9 @@ await User.bulkCreate([
         profile_picture: "/avatar/mamie-canne.jpg",
         description: "J'adore les promenades en bord de mer et la lecture de romans d'amour.",
         role: "user",
-        interest: initialInterets
-      },
-      {
+        interest: initialInterets,
+    },
+    {
         pseudo: "marineAdmin",
         email: "marine.admin@example.com",
         firstname: "Marine",
@@ -223,191 +221,180 @@ await User.bulkCreate([
         profile_picture: "",
         description: "Je suis ton pire ennemi, ici l'attaque des Tyrans !",
         role: "admin",
-        interest: initialInterets
-      }
-    ]);
-    console.log("✅ 10 utilisateurs sénior insérés avec succès");
-    
+        interest: initialInterets,
+    },
+]);
+console.log("✅ 10 utilisateurs sénior insérés avec succès");
+
 // ici on insère les catégories
-await Category.bulkCreate([
-        { name: "Loisirs" },
-        { name: "Culture" },
-        { name: "Sport" },
-        { name: "Bien-être" },
-        { name: "Style de vie" },
-        { name: "Jeux" },
-        { name: "Musique" },
-        { name: "Nature" }
-      ], { returning: true });
-      console.log("✅ 10 catégories insérés avec succès");
+await Category.bulkCreate([{ name: "Loisirs" }, { name: "Culture" }, { name: "Sport" }, { name: "Bien-être" }, { name: "Style de vie" }, { name: "Jeux" }, { name: "Musique" }, { name: "Nature" }], { returning: true });
+console.log("✅ 10 catégories insérés avec succès");
 
 // ici on insère les activités
 await Activity.bulkCreate([
-        { name: "Atelier tricot" },
-        { name: "Peinture sur soie" },
-        { name: "Scrapbooking" },
-        { name: "Lecture" },
-        { name: "Peinture" },
-        { name: "Création bijoux" },
-        { name: "Photographie" },
-        { name: "Poterie" },
-        { name: "Cuisine" },
-        { name: "Visite de musée" },
-        { name: "Conférence historique" },
-        { name: "Projection de film ancien" },
-        { name: "Cinéma" },
-        { name: "Théâtre" },
-        { name: "Gym douce" },
-        { name: "Aquagym" },
-        { name: "Randonnée" },
-        { name: "Marche rapide" },
-        { name: "Danse" },
-        { name: "Vélo" },
-        { name: "Séance de relaxation" },
-        { name: "Massage assis" },
-        { name: "Yoga" },
-        { name: "Pilate" },
-        { name: "Sophrologie" },
-        { name: "Cures thermales" },
-        { name: "Voyage" },
-        { name: "Proche de ma famille" },
-        { name: "Vie simple" },
-        { name: "A la recherche de l'amour" },
-        { name: "Sorties entre amis" },
-        { name: "Bénévolat" },
-        { name: "Curieux" },
-        { name: "Tournoi de belote" },
-        { name: "Scrabble" },
-        { name: "Bingo" },
-        { name: "Bridge" },
-        { name: "Mots croisés" },
-        { name: "Sudoku" },
-        { name: "Puzzles" },
-        { name: "Chorale" },
-        { name: "Classique" },
-        { name: "Jazz" },
-        { name: "Rock" },
-        { name: "Balade au parc" },
-        { name: "Jardinage" },
-        { name: "Visite de parcs naturels" },
-        { name: "Amoureux des animaux" },
-      ]);
-      console.log("✅ Activités insérées avec succès");
+    { name: "Atelier tricot" },
+    { name: "Peinture sur soie" },
+    { name: "Scrapbooking" },
+    { name: "Lecture" },
+    { name: "Peinture" },
+    { name: "Création bijoux" },
+    { name: "Photographie" },
+    { name: "Poterie" },
+    { name: "Cuisine" },
+    { name: "Visite de musée" },
+    { name: "Conférence historique" },
+    { name: "Projection de film ancien" },
+    { name: "Cinéma" },
+    { name: "Théâtre" },
+    { name: "Gym douce" },
+    { name: "Aquagym" },
+    { name: "Randonnée" },
+    { name: "Marche rapide" },
+    { name: "Danse" },
+    { name: "Vélo" },
+    { name: "Séance de relaxation" },
+    { name: "Massage assis" },
+    { name: "Yoga" },
+    { name: "Pilate" },
+    { name: "Sophrologie" },
+    { name: "Cures thermales" },
+    { name: "Voyage" },
+    { name: "Proche de ma famille" },
+    { name: "Vie simple" },
+    { name: "A la recherche de l'amour" },
+    { name: "Sorties entre amis" },
+    { name: "Bénévolat" },
+    { name: "Curieux" },
+    { name: "Tournoi de belote" },
+    { name: "Scrabble" },
+    { name: "Bingo" },
+    { name: "Bridge" },
+    { name: "Mots croisés" },
+    { name: "Sudoku" },
+    { name: "Puzzles" },
+    { name: "Chorale" },
+    { name: "Classique" },
+    { name: "Jazz" },
+    { name: "Rock" },
+    { name: "Balade au parc" },
+    { name: "Jardinage" },
+    { name: "Visite de parcs naturels" },
+    { name: "Amoureux des animaux" },
+]);
+console.log("✅ Activités insérées avec succès");
 
 //fonction pour paramétrer la creation des activités et leur lien avec une catégorie
 async function addActivityToCategory(activityName, categoryName) {
     const activity = await Activity.findOne({ where: { name: activityName } });
     const category = await Category.findOne({ where: { name: categoryName } });
-  
+
     if (!activity || !category) {
-      throw new Error("Activity or Category not found");
+        throw new Error("Activity or Category not found");
     }
-  
+
     // Associer l'activité à la catégorie
     activity.category_id = category.id; // Met à jour la clé étrangère category_id
     await activity.save(); // Sauvegarde l'activité avec la nouvelle catégorie
-  }
-  
-    // Ajout d'activités aux catégories
-    await addActivityToCategory("Atelier tricot", "Loisirs");
-    await addActivityToCategory("Peinture sur soie", "Loisirs");
-    await addActivityToCategory("Scrapbooking", "Loisirs");
-    await addActivityToCategory("Lecture", "Loisirs");
-    await addActivityToCategory("Peinture", "Loisirs");
-    await addActivityToCategory("Création bijoux", "Loisirs");
-    await addActivityToCategory("Photographie", "Loisirs");
-    await addActivityToCategory("Poterie", "Loisirs");
-    await addActivityToCategory("Cuisine", "Loisirs");
+}
 
-    await addActivityToCategory("Visite de musée", "Culture");
-    await addActivityToCategory("Conférence historique", "Culture");
-    await addActivityToCategory("Projection de film ancien", "Culture");
-    await addActivityToCategory("Cinéma", "Culture");
-    await addActivityToCategory("Théâtre", "Culture");
+// Ajout d'activités aux catégories
+await addActivityToCategory("Atelier tricot", "Loisirs");
+await addActivityToCategory("Peinture sur soie", "Loisirs");
+await addActivityToCategory("Scrapbooking", "Loisirs");
+await addActivityToCategory("Lecture", "Loisirs");
+await addActivityToCategory("Peinture", "Loisirs");
+await addActivityToCategory("Création bijoux", "Loisirs");
+await addActivityToCategory("Photographie", "Loisirs");
+await addActivityToCategory("Poterie", "Loisirs");
+await addActivityToCategory("Cuisine", "Loisirs");
 
-    await addActivityToCategory("Gym douce", "Sport");
-    await addActivityToCategory("Aquagym", "Sport");
-    await addActivityToCategory("Randonnée", "Sport");
-    await addActivityToCategory("Marche rapide", "Sport");
-    await addActivityToCategory("Danse", "Sport");
-    await addActivityToCategory("Vélo", "Sport");
+await addActivityToCategory("Visite de musée", "Culture");
+await addActivityToCategory("Conférence historique", "Culture");
+await addActivityToCategory("Projection de film ancien", "Culture");
+await addActivityToCategory("Cinéma", "Culture");
+await addActivityToCategory("Théâtre", "Culture");
 
-    await addActivityToCategory("Séance de relaxation", "Bien-être");
-    await addActivityToCategory("Massage assis", "Bien-être");
-    await addActivityToCategory("Yoga", "Bien-être");
-    await addActivityToCategory("Pilate", "Bien-être");
-    await addActivityToCategory("Sophrologie", "Bien-être");
-    await addActivityToCategory("Cures thermales", "Bien-être");
+await addActivityToCategory("Gym douce", "Sport");
+await addActivityToCategory("Aquagym", "Sport");
+await addActivityToCategory("Randonnée", "Sport");
+await addActivityToCategory("Marche rapide", "Sport");
+await addActivityToCategory("Danse", "Sport");
+await addActivityToCategory("Vélo", "Sport");
 
-    await addActivityToCategory("Voyage", "Style de vie");
-    await addActivityToCategory("Proche de ma famille", "Style de vie");
-    await addActivityToCategory("Vie simple", "Style de vie");
-    await addActivityToCategory("A la recherche de l'amour", "Style de vie");
-    await addActivityToCategory("Sorties entre amis", "Style de vie");
-    await addActivityToCategory("Bénévolat", "Style de vie");
-    await addActivityToCategory("Curieux", "Style de vie");
+await addActivityToCategory("Séance de relaxation", "Bien-être");
+await addActivityToCategory("Massage assis", "Bien-être");
+await addActivityToCategory("Yoga", "Bien-être");
+await addActivityToCategory("Pilate", "Bien-être");
+await addActivityToCategory("Sophrologie", "Bien-être");
+await addActivityToCategory("Cures thermales", "Bien-être");
 
-    await addActivityToCategory("Tournoi de belote", "Jeux");
-    await addActivityToCategory("Scrabble", "Jeux");
-    await addActivityToCategory("Bingo", "Jeux");
-    await addActivityToCategory("Bridge", "Jeux");
-    await addActivityToCategory("Mots croisés", "Jeux");
-    await addActivityToCategory("Sudoku", "Jeux");
-    await addActivityToCategory("Puzzles", "Jeux");
+await addActivityToCategory("Voyage", "Style de vie");
+await addActivityToCategory("Proche de ma famille", "Style de vie");
+await addActivityToCategory("Vie simple", "Style de vie");
+await addActivityToCategory("A la recherche de l'amour", "Style de vie");
+await addActivityToCategory("Sorties entre amis", "Style de vie");
+await addActivityToCategory("Bénévolat", "Style de vie");
+await addActivityToCategory("Curieux", "Style de vie");
 
-    await addActivityToCategory("Chorale", "Musique");
-    await addActivityToCategory("Classique", "Musique");
-    await addActivityToCategory("Jazz", "Musique");
-    await addActivityToCategory("Rock", "Musique");
+await addActivityToCategory("Tournoi de belote", "Jeux");
+await addActivityToCategory("Scrabble", "Jeux");
+await addActivityToCategory("Bingo", "Jeux");
+await addActivityToCategory("Bridge", "Jeux");
+await addActivityToCategory("Mots croisés", "Jeux");
+await addActivityToCategory("Sudoku", "Jeux");
+await addActivityToCategory("Puzzles", "Jeux");
 
-    await addActivityToCategory("Balade au parc", "Nature");
-    await addActivityToCategory("Jardinage", "Nature");
-    await addActivityToCategory("Visite de parcs naturels", "Nature");
-    await addActivityToCategory("Amoureux des animaux", "Nature");
+await addActivityToCategory("Chorale", "Musique");
+await addActivityToCategory("Classique", "Musique");
+await addActivityToCategory("Jazz", "Musique");
+await addActivityToCategory("Rock", "Musique");
 
-    console.log("✅ Activités insérées avec succès");
+await addActivityToCategory("Balade au parc", "Nature");
+await addActivityToCategory("Jardinage", "Nature");
+await addActivityToCategory("Visite de parcs naturels", "Nature");
+await addActivityToCategory("Amoureux des animaux", "Nature");
 
-// Création des événements fictifs 
+console.log("✅ Activités insérées avec succès");
+
+// Création des événements fictifs
 const events = [
     {
         name: "Café Rencontre et Discussions",
-        date: "2025-05-05", 
+        date: "2025-05-05",
         description: "Rencontre conviviale autour d'un café pour discuter de vos passions et de vos expériences de vie.",
-        picture: "https://images.pexels.com/photos/8790891/pexels-photo-8790891.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        picture: "https://images.pexels.com/photos/8790891/pexels-photo-8790891.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     {
         name: "Soirée dansante rétro",
-        date: "2025-06-01", 
+        date: "2025-06-01",
         description: "Une soirée dansante avec des musiques des années 60 et 70. Viens bouger et retrouver tes souvenirs !",
-        picture: "https://images.pexels.com/photos/6173849/pexels-photo-6173849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        picture: "https://images.pexels.com/photos/6173849/pexels-photo-6173849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     {
         name: "Randonnée douce en forêt",
-        date: "2025-05-15", 
+        date: "2025-05-15",
         description: "Promenade tranquille en forêt pour profiter du plein air et échanger avec de nouveaux amis.",
         availability: 25,
-        picture: "https://images.pexels.com/photos/31798073/pexels-photo-31798073/free-photo-of-vue-panoramique-sur-les-montagnes-des-pyrenees-francaises.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        picture: "https://images.pexels.com/photos/31798073/pexels-photo-31798073/free-photo-of-vue-panoramique-sur-les-montagnes-des-pyrenees-francaises.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     {
         name: "Atelier Cuisine et Partage",
-        date: "2025-07-10", 
+        date: "2025-07-10",
         description: "Préparez des recettes simples et savoureuses à partager, tout en rencontrant d'autres passionnés de cuisine.",
         availability: 16,
-        picture: "https://images.pexels.com/photos/1655329/pexels-photo-1655329.jpeg?auto=compress&cs=tinysrgb&w=600"
+        picture: "https://images.pexels.com/photos/1655329/pexels-photo-1655329.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
         name: "Soirée cinéma et discussion",
-        date: "2025-08-20", 
+        date: "2025-08-20",
         description: "Projection d'un film classique suivi d'une discussion autour du cinéma. Un moment culturel et chaleureux.",
         availability: 10,
-        picture: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    }
-    
+        picture: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    },
 ];
-    // Insérer les événements dans la base de données
-    await Event.bulkCreate(events);
-    console.log("✅ 5 événements créés avec succès");
-
+// Insérer les événements dans la base de données
+await Event.bulkCreate(events);
+console.log("✅ 5 événements créés avec succès");
 
 // Fonction pour ajouter une activité à un événement
 async function addActivityToEvent(eventName, activityName) {
@@ -421,17 +408,16 @@ async function addActivityToEvent(eventName, activityName) {
     await event.addActivity(activity); // Associe l'activité à l'événement
 }
 
-    // Association d'évènements aux activités 
-    await addActivityToEvent("Café Rencontre et Discussions", "Lecture");
-    await addActivityToEvent("Soirée dansante rétro", "Danse");
-    await addActivityToEvent("Randonnée douce en forêt", "Marche rapide");
-    await addActivityToEvent("Randonnée douce en forêt", "Randonnée");
-    await addActivityToEvent("Soirée cinéma et discussion", "Cinéma");
-    await addActivityToEvent("Soirée cinéma et discussion", "Sorties entre amis");
-    await addActivityToEvent("Atelier Cuisine et Partage", "Cuisine");
+// Association d'évènements aux activités
+await addActivityToEvent("Café Rencontre et Discussions", "Lecture");
+await addActivityToEvent("Soirée dansante rétro", "Danse");
+await addActivityToEvent("Randonnée douce en forêt", "Marche rapide");
+await addActivityToEvent("Randonnée douce en forêt", "Randonnée");
+await addActivityToEvent("Soirée cinéma et discussion", "Cinéma");
+await addActivityToEvent("Soirée cinéma et discussion", "Sorties entre amis");
+await addActivityToEvent("Atelier Cuisine et Partage", "Cuisine");
 
-
-    console.log("✅ Activités ajoutées aux événements");
+console.log("✅ Activités ajoutées aux événements");
 
 // Fonction pour ajouter un user à un événement
 async function addUserToEvent(userPseudo, eventName) {
@@ -453,11 +439,11 @@ await addUserToEvent("jeanluc64", "Randonnée douce en forêt");
 await addUserToEvent("alain69", "Atelier Cuisine et Partage");
 await addUserToEvent("claudine60", "Atelier Cuisine et Partage");
 
-    console.log("✅ Utilisateurs ajoutés aux événements");
+console.log("✅ Utilisateurs ajoutés aux événements");
 
 // Fonction pour ajouter un utilisateur à une activité
 async function addActivityToUser(userPseudo, activityName) {
-    const activity = await Activity.findOne({ where: { name: activityName }});
+    const activity = await Activity.findOne({ where: { name: activityName } });
     const user = await User.findOne({ where: { pseudo: userPseudo } });
 
     if (!activity || !user) {
@@ -508,36 +494,36 @@ async function addActivityToUser(userPseudo, activityName) {
 // await addActivityToUser("alain69", "Projection de film ancien");
 // await addActivityToUser("alain69", "Jazz");
 
-    console.log("✅ Activités ajoutées aux utilisateurs");
+console.log("✅ Activités ajoutées aux utilisateurs");
 
 // Fonction pour ajouter une localisation à un utilisateur avec un département
 async function addLocalisationToUser(userPseudo, localisationName, department) {
-  // Vérifier si la localisation avec le département existe déjà
-  let localisation = await Localisation.findOne({ 
-      where: { 
-          city: localisationName, 
-          department: department 
-      }
-  });
+    // Vérifier si la localisation avec le département existe déjà
+    let localisation = await Localisation.findOne({
+        where: {
+            city: localisationName,
+            department: department,
+        },
+    });
 
-  // Si la localisation n'existe pas, créer une nouvelle localisation
-  if (!localisation) {
-      localisation = await Localisation.create({ 
-          city: localisationName, 
-          department: department 
-      });
-  }
+    // Si la localisation n'existe pas, créer une nouvelle localisation
+    if (!localisation) {
+        localisation = await Localisation.create({
+            city: localisationName,
+            department: department,
+        });
+    }
 
-  // Récupérer l'utilisateur
-  const user = await User.findOne({ where: { pseudo: userPseudo } });
+    // Récupérer l'utilisateur
+    const user = await User.findOne({ where: { pseudo: userPseudo } });
 
-  // Vérifier si l'utilisateur existe
-  if (!user) {
-      throw new Error("User not found");
-  }
+    // Vérifier si l'utilisateur existe
+    if (!user) {
+        throw new Error("User not found");
+    }
 
-  // Associer l'utilisateur à la localisation
-  await user.setLocalisation(localisation);
+    // Associer l'utilisateur à la localisation
+    await user.setLocalisation(localisation);
 }
 
 // Exemple d'appel pour associer des utilisateurs aux localisations avec département
@@ -552,35 +538,34 @@ await addLocalisationToUser("bernadette66", "Perpignan", "Pyrénées-Orientales"
 await addLocalisationToUser("pierrette59", "Lille", "Nord");
 await addLocalisationToUser("alain69", "Lyon", "Rhône");
 
-
 // Fonction pour ajouter un événement à une localisation avec un département
 async function addLocalisationToEvent(eventName, localisationCity, department) {
-  // Vérifier si la localisation avec la ville et le département existe
-  let localisation = await Localisation.findOne({
-      where: {
-          city: localisationCity,
-          department: department
-      }
-  });
+    // Vérifier si la localisation avec la ville et le département existe
+    let localisation = await Localisation.findOne({
+        where: {
+            city: localisationCity,
+            department: department,
+        },
+    });
 
-  // Si la localisation n'existe pas, créer une nouvelle localisation
-  if (!localisation) {
-      localisation = await Localisation.create({
-          city: localisationCity,
-          department: department
-      });
-  }
+    // Si la localisation n'existe pas, créer une nouvelle localisation
+    if (!localisation) {
+        localisation = await Localisation.create({
+            city: localisationCity,
+            department: department,
+        });
+    }
 
-  // Récupérer l'événement
-  const event = await Event.findOne({ where: { name: eventName } });
+    // Récupérer l'événement
+    const event = await Event.findOne({ where: { name: eventName } });
 
-  // Vérifier si l'événement existe
-  if (!event) {
-      throw new Error("Event not found");
-  }
+    // Vérifier si l'événement existe
+    if (!event) {
+        throw new Error("Event not found");
+    }
 
-  // Associer l'événement à la localisation
-  await event.setLocalisation(localisation);
+    // Associer l'événement à la localisation
+    await event.setLocalisation(localisation);
 }
 
 // Exemple d'appel pour associer des événements aux localisations avec département
@@ -589,8 +574,6 @@ await addLocalisationToEvent("Soirée dansante rétro", "Perpignan", "Pyrénées
 await addLocalisationToEvent("Randonnée douce en forêt", "Pau", "Pyrénées-Atlantiques");
 await addLocalisationToEvent("Atelier Cuisine et Partage", "Lyon", "Rhône");
 await addLocalisationToEvent("Soirée cinéma et discussion", "Colmar", "Haut-Rhin");
-
-
 
 // Création des conversations fictives
 async function createConversation(senderId, receiverId, content) {
@@ -603,33 +586,31 @@ async function createConversation(senderId, receiverId, content) {
 
     // Vérifie si une conversation entre les deux utilisateurs existe déjà
     let conversation = await Conversation.findOne({
-      where: {
-          sender_id: sender.id,
-          receiver_id: receiver.id
-      }
+        where: {
+            sender_id: sender.id,
+            receiver_id: receiver.id,
+        },
     });
 
     const newMessage = `[${new Date().toISOString()}] ${senderId}: ${content}\n`;
 
-      // Si la conversation existe, ajoute un nouveau message à la conversation
-      if (conversation) {
+    // Si la conversation existe, ajoute un nouveau message à la conversation
+    if (conversation) {
         // Ajoute le nouveau message à la suite du contenu existant
         conversation.content += newMessage;
         await conversation.save();
 
         console.log(`✅ Nouveau message ajouté à la conversation entre ${senderId} et ${receiverId}`);
+    } else {
+        // Crée la conversation entre user1 et user2
+        conversation = await Conversation.create({
+            sender_id: sender.id,
+            receiver_id: receiver.id,
+            content: newMessage,
+        });
 
-        
-      } else {
-      // Crée la conversation entre user1 et user2
-      conversation = await Conversation.create({
-        sender_id: sender.id, 
-        receiver_id: receiver.id, 
-        content: newMessage
-      }); 
-    
-    console.log(`✅ Conversation créée entre ${senderId} et ${receiverId}`);
-  }
+        console.log(`✅ Conversation créée entre ${senderId} et ${receiverId}`);
+    }
 }
 
 // Ajouter des conversations entre certains utilisateurs
@@ -670,7 +651,6 @@ await createConversation("georges71", "pierrette59", "Salut Pierrette ! Beethove
 await createConversation("pierrette59", "georges71", "J’aime beaucoup Chopin, il a une telle sensibilité dans ses œuvres.");
 await createConversation("georges71", "pierrette59", "Je comprends, Chopin est un poète. Tu joues d’un instrument ?");
 await createConversation("pierrette59", "georges71", "Oui, je joue du piano, mais j’aime aussi écouter les autres jouer.");
-
 
 console.log("✅ Conversations créées entre utilisateurs");
 

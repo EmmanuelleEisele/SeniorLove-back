@@ -1,0 +1,77 @@
+### Test d'accès admin pour les événements
+
+### Variables
+@baseUrl = http://localhost:3000
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoibWFyaW5lLmFkbWluQGV4YW1wbGUuY29tIiwicHNldWRvIjoibWFyaW5lQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIzOTkwNzQsImV4cCI6MTc1MjQ4NTQ3NH0.HbRAH5rJ-c6CcoxoFqj1xZ_Ffnf5raviiqtKa9Gu0VY
+@userToken = YOUR_USER_TOKEN_HERE
+
+### 1. Test création d'événement avec token admin (devrait fonctionner)
+POST {{baseUrl}}/event/form
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+    "name": "Test Event Admin",
+    "date": "2025-08-15",
+    "description": "Événement de test créé par un admin",
+    "availability": 20,
+    "picture": "test-picture.jpg",
+    "city": "Albi",
+    "activities": [1, 2]
+}
+
+### 2. Test création d'événement avec token utilisateur normal (devrait échouer)
+POST {{baseUrl}}/event/form
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+    "name": "Test Event User",
+    "date": "2025-08-15",
+    "description": "Événement de test créé par un utilisateur normal",
+    "availability": 20,
+    "picture": "test-picture.jpg",
+    "city": "Lyon",
+    "activities": [1, 2]
+}
+
+### 3. Test modification d'événement avec token admin (devrait fonctionner)
+PATCH {{baseUrl}}/events/8
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+    "name": "Événement modifié par admin",
+    "description": "Description modifiée"
+}
+
+### 4. Test modification d'événement avec token utilisateur normal (devrait échouer)
+PATCH {{baseUrl}}/events/1
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+    "name": "Tentative de modification par utilisateur",
+    "description": "Cette modification devrait échouer"
+}
+
+### 5. Test suppression d'événement avec token admin (devrait fonctionner)
+DELETE {{baseUrl}}/events/8
+Authorization: Bearer {{adminToken}}
+
+### 6. Test suppression d'événement avec token utilisateur normal (devrait échouer)
+DELETE {{baseUrl}}/events/1
+Authorization: Bearer {{userToken}}
+
+### 7. Test sans token (devrait échouer)
+POST {{baseUrl}}/event/form
+Content-Type: application/json
+
+{
+    "name": "Test sans token",
+    "date": "2025-08-15",
+    "description": "Ceci devrait échouer",
+    "availability": 20,
+    "picture": "test-picture.jpg",
+    "city": "Marseille"
+}
