@@ -441,61 +441,6 @@ await addUserToEvent("claudine60", "Atelier Cuisine et Partage");
 
 console.log("✅ Utilisateurs ajoutés aux événements");
 
-// Fonction pour ajouter un utilisateur à une activité
-async function addActivityToUser(userPseudo, activityName) {
-    const activity = await Activity.findOne({ where: { name: activityName } });
-    const user = await User.findOne({ where: { pseudo: userPseudo } });
-
-    if (!activity || !user) {
-        throw new Error("Activity or User not found");
-    }
-
-    await activity.addUser(user); // Associe l'utilisateur à une activité
-}
-
-// Association d'utilisateurs aux activités
-// await addActivityToUser("jean55", "Vélo");
-// await addActivityToUser("jean55", "Sorties entre amis");
-// await addActivityToUser("jean55", "Balade au parc");
-
-// await addActivityToUser("marie62", "Lecture");
-// await addActivityToUser("marie62", "Jardinage");
-// await addActivityToUser("marie62", "Amoureux des animaux");
-
-// await addActivityToUser("paul77", "A la recherche de l'amour");
-// await addActivityToUser("paul77", "Voyage");
-// await addActivityToUser("paul77", "Tournoi de belote");
-
-// await addActivityToUser("claudine60", "Peinture");
-// await addActivityToUser("claudine60", "Cuisine");
-// await addActivityToUser("claudine60", "Classique");
-
-// await addActivityToUser("jeanluc64", "Randonnée");
-// await addActivityToUser("jeanluc64", "Visite de parcs naturels");
-// await addActivityToUser("jeanluc64", "A la recherche de l'amour");
-
-// await addActivityToUser("monique68", "A la recherche de l'amour");
-// await addActivityToUser("monique68", "Cures thermales");
-// await addActivityToUser("monique68", "Peinture sur soie");
-
-// await addActivityToUser("georges71", "Classique");
-// await addActivityToUser("georges71", "Voyage");
-// await addActivityToUser("georges71", "Projection de film ancien");
-
-// await addActivityToUser("bernadette66", "Sorties entre amis");
-// await addActivityToUser("bernadette66", "Danse");
-// await addActivityToUser("bernadette66", "Photographie");
-
-// await addActivityToUser("pierrette59", "Lecture");
-// await addActivityToUser("pierrette59", "Visite de parcs naturels");
-// await addActivityToUser("pierrette59", "Cinéma");
-
-// await addActivityToUser("alain69", "Cuisine");
-// await addActivityToUser("alain69", "Projection de film ancien");
-// await addActivityToUser("alain69", "Jazz");
-
-console.log("✅ Activités ajoutées aux utilisateurs");
-
 // Fonction pour ajouter une localisation à un utilisateur avec un département
 async function addLocalisationToUser(userPseudo, localisationName, department) {
     // Vérifier si la localisation avec le département existe déjà
