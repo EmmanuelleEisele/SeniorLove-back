@@ -1,14 +1,14 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiQWxhbkBleGFtcGxlLmNvbSIsInBzZXVkbyI6IkFsYW51ZXMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc0OTY2MTg3NiwiZXhwIjoxNzQ5NzQ4Mjc2fQ.XggvEQUR5baYDTLwmtXwBa80_L-fpBLoEHceB8BmjTA
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoibWFyaW5lLmFkbWluQGV4YW1wbGUuY29tIiwicHNldWRvIjoibWFyaW5lQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTI1MDE4MjEsImV4cCI6MTc1MjU4ODIyMX0.AQBNWy_9_k2HFEjCxJW9EV9qg3MTIzk6_P9QqhJk-AI
 
 POST http://localhost:3000/register
 content-type: application/json
 
 {
-    "pseudo": "Alanues",
-    "email": "Alan@example.com",
-    "password": "alanpass",
-    "confirmPassword": "alanpass",
-    "birth_date": "1960-05-04"
+    "pseudo": "GeorgesL",
+    "email": "georgesl@example.com",
+    "password": "georgepass",
+    "confirmPassword": "georgepass",
+    "birth_date": "1955-03-17"
 }
 
 #fin
@@ -49,18 +49,18 @@ Authorization: Bearer {{token}}
 #fin
 ###
 
-GET http://marineligny-server.eddi.cloud/messaging
+GET http://localhost:3000/messaging
 Authorization: Bearer {{token}}
 #fin
 ###
 
-GET http://marineligny-server.eddi.cloud/message/9
+GET http://localhost:3000/message/9
 content-type: application/json
 Authorization: Bearer {{token}}
 #fin
 ###
 
-POST http://marineligny-server.eddi.cloud/message/9
+POST http://localhost:3000/message/9
 content-type: application/json
 Authorization: Bearer {{token}}
 

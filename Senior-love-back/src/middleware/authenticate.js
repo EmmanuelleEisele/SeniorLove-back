@@ -12,7 +12,7 @@ export const authenticate=(req, _, next)=>{
         const user = verifyToken(token);
         req.user = user;
         next();
-    } catch (error) {
+    } catch (jwtError) {
         return next(new jwtError('token invalide ou expiré'))
     }
 }

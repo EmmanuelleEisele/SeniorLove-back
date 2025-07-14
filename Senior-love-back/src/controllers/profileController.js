@@ -130,7 +130,7 @@ export const profileController = {
         }
     },
     //fonction pour modifier mon profil avec le token
-    async updateOne(req, res) {
+    async updateOne(req, res, next) {
         try {
             const profileId = Number(req.user.id);
             const user = await User.findByPk(profileId, {
@@ -162,9 +162,9 @@ export const profileController = {
             });
 
             const inputData = req.body;
-            const { city, department, activities, ...userData } = inputData;
+            const { city, activities, ...userData } = inputData;
 
-            // Gérer la localisation uniquement si city + department sont modifiés
+            // Gérer la localisation uniquement si city est modifié
             if (city) {
                 //---------------insertion du code du call API Geolocalisation -------------------
                 const response = await axios.get("https://geo.api.gouv.fr/communes", {

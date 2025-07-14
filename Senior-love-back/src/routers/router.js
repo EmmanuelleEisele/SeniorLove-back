@@ -72,7 +72,7 @@ router.route('/event/form')
 
 
 // Dans le cas ou la route n'existe pas 
-router.use((err, _, res, __) => {
+router.use((err, _, res) => {
       // On renvoi vers le middleware de centralisation des erreurs
       if (err.name === 'NotFoundError') {
       return res.status(404).json({ message: err.message });

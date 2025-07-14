@@ -1,6 +1,6 @@
 import { generateToken } from "../helper/JWT.js";
 import {
-	BadRequestError,
+
 	ConflictError,
 	NotFoundError,
 } from "../middleware/error.js";

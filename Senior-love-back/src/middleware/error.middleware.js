@@ -1,4 +1,4 @@
-export const  errorMiddleware = (error, _, res , __)=>{
+export const  errorMiddleware = (error, _, res)=>{
     //Gestion des mauvaise requetes
     if(error.name === "BadRequestError"){
         return res.status(400).json({message: error.message})

@@ -1,8 +1,4 @@
 import { sequelize } from '../models/sequelize.js';
-import { Activity, User, Event } from '../models/association.js';
-
-
-
 
 await sequelize.sync({ force: true });
 

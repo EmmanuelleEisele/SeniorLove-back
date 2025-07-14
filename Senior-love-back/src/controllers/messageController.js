@@ -1,4 +1,4 @@
-import { Op, ValidationError } from "sequelize";
+import { Op } from "sequelize";
 import { Conversation, Localisation, User } from "../models/association.js";
 import validator from "validator";
 
