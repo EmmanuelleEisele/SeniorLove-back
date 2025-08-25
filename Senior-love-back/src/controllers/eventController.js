@@ -147,12 +147,13 @@ export const eventController = {
             if (req.user?.role !== 'admin') {
                 return res.status(403).json({ message: 'Accès refusé. Seuls les administrateurs peuvent créer des événements.' });
             }
+            
+            // Associer l'événement à l'utilisateur admin qui le crée
+            eventData.user_id = req.user.id;
 
             //recuperation de city et les éléments de event (department est ignoré car récupéré via API)
             const { city, activities, ...eventData } = req.validatedData;
 
-            // Associer l'événement à l'utilisateur admin qui le crée
-            eventData.user_id = req.user.id;
 
             // Gérer la localisation uniquement si city est fourni
             if (city) {
