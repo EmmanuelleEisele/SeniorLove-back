@@ -1,5 +1,8 @@
 
 import { sequelize } from "../models/sequelize.js";
+import  "../models/asoociation.js";
+
+console.log("Création des tables en cours");
 
 await sequelize.sync({ force: true });
 
