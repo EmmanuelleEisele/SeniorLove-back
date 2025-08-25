@@ -1,6 +1,6 @@
 
 import { sequelize } from "../models/sequelize.js";
-import  "../models/asoociation.js";
+import  "../models/association.js";
 
 console.log("Création des tables en cours");
 
