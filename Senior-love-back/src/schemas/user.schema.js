@@ -19,7 +19,15 @@ export const createUserSchema = z.object({
       }, {
         message: "Date invalide"
       })
-      .transform(str => new Date(str)),
+      .transform(str => new Date(str))
+      .refine(date => {
+        const today = new Date();
+        const age = today.getFullYear() - date.getFullYear();
+        const monthDiff = today.getMonth() - date.getMonth();
+        return age > 60 || (age === 60 && monthDiff >= 0);
+      }, {
+        message: "Vous devez avoir au moins 60 ans pour vous inscrire",
+      }),
     role: z.enum(["admin","user"]).optional()
 }).refine(data => data.password === data.confirmPassword, {
     message: "Le mot de passe ne correspond pas",

@@ -3,7 +3,6 @@ import { z } from "zod";
 export const validate = (schema) => (req, res, next) => {
     try {
         req.validatedData = schema.parse(req.body);
-        //console.log("Zod schema keys:", Object.keys(schema.shape)); // Affiche les clés attendues par Zod
         next();
     } catch (err) {
         if (err instanceof z.ZodError) {
