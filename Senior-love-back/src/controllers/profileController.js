@@ -6,7 +6,7 @@ import { Op } from "sequelize";
 export const profileController = {
     async getAll(req, res) {
         try {
-            const { localisation } = req.query;
+            const { localisation , gender } = req.query;
 
             const whereFiltre = {
                 role: "user", // <-- filtre ici uniquement les users et non l'admin
@@ -22,6 +22,10 @@ export const profileController = {
                     { "$localisation.department$": { [Op.iLike]: `%${localisation}%` } },
                 ];
             }
+            if (gender) {
+                whereFiltre.gender = gender;
+            }
+            
             const users = await User.findAll({
                 where: whereFiltre,
                 attributes: {
