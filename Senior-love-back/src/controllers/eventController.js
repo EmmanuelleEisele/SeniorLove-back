@@ -1,11 +1,23 @@
 import axios from "axios";
 import { NotFoundError } from "../middleware/error.js";
 import { Activity, Category, Event, Localisation, User } from "../models/association.js";
+import { Op } from "sequelize";
 
 export const eventController = {
     // fonction pour trouver tous les évènements, classé par date du plus proche au plus loin
-    async getAll(_, res, next) {
+    async getAll(req, res, next) {
         try {
+            const { localisation } = req.query;
+
+            const whereFiltre = {};
+
+            if (localisation) {
+                whereFiltre[Op.or] = [
+                     { city: { [Op.iLike]: `%${localisation}%` } },
+                     { department: { [Op.iLike]: `%${localisation}%` } },
+                ];
+            }
+
             const events = await Event.findAll(
                 {
                     include: [
@@ -13,6 +25,7 @@ export const eventController = {
                             model: Localisation,
                             as: "localisation", //alias défini dans l'association à utiliser pour que la fonction marche
                             attributes: ["city", "department"],
+                            where: whereFiltre,
                         },
                         {
                             model: Activity,
@@ -26,10 +39,8 @@ export const eventController = {
                             ],
                         },
                     ],
-                },
-                {
                     order: [["date", "ASC"]],
-                }
+                },
             );
             if (events.length === 0) {
                 return next(new NotFoundError("Events not found"));

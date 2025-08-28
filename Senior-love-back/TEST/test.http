@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoibWFyaW5lLmFkbWluQGV4YW1wbGUuY29tIiwicHNldWRvIjoibWFyaW5lQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTI1MDE4MjEsImV4cCI6MTc1MjU4ODIyMX0.AQBNWy_9_k2HFEjCxJW9EV9qg3MTIzk6_P9QqhJk-AI
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJhbGFpbjY5QGV4YW1wbGUuY29tIiwicHNldWRvIjoiYWxhaW42OSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU2MzY5MjYyLCJleHAiOjE3NTY0NTU2NjJ9.TfqYEXEdqpfx88B2hfnPiP6vbEMTr1rzuQ1aTVfNzpM
 POST http://localhost:3000/register
 content-type: application/json
 
@@ -17,8 +16,8 @@ POST http://localhost:3000/login
 content-type: application/json
 
 {
-    "email": "aaaa@example.com",
-    "password": "aaaaaaaaa"
+    "email": "alain69@example.com",
+    "password": "alainpass"
 }
 
 #fin
@@ -76,3 +75,9 @@ content-type: application/json
 Authorization: Bearer {{token}}
 #fin
 ###
+
+GET http://localhost:3000/events?localisation=p
+content-type: application/json
+Authorization: Bearer {{token}}
+
+#fin
