@@ -1,8 +1,9 @@
-import { generateToken } from "../helper/JWT.js";
+import { generateRefreshToken, generateToken } from "../helper/JWT.js";
 import {  ConflictError, UnauthorizedError } from "../middleware/error.js";
 import { Activity, Category, User } from "../models/association.js";
 import argon2 from "argon2";
 import validator from "validator";
+import { RefreshToken } from "../models/RefreshToken.js";
 
 export const connexionController = {
   async login(req, res, next) {
@@ -21,12 +22,27 @@ export const connexionController = {
         return next(new UnauthorizedError("Email ou mot de passe incorrect"));
       }
 
-      // Token
-      const token = generateToken({
+      const payload = {
         id: user.id,
-        email: user.email,
         pseudo: user.pseudo,
         role: user.role,
+      };
+      // Token
+      const token = generateToken(payload);
+      const refreshToken = generateRefreshToken({ id: user.id });
+
+      // Supprimer les anciens refresh tokens (1 seul autorisé par utilisateur)
+      await RefreshToken.destroy({ where: { userId: user.id } });
+      // Créer un nouveau refresh token
+      await RefreshToken.create({ token: refreshToken, userId: user.id });
+
+      //on envoi le token en httpOnly cookie
+      const isProd = process.env.NODE_ENV === 'production';
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: 'Strict',              //protège contre les csrf
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
       });
 
       return res.status(200).json({
@@ -38,6 +54,7 @@ export const connexionController = {
           role: user.role,
         },
         token,
+        //on envoie pas le refreshtoken car il est déja envoyé dans le cookie
       });
     } catch (err) {
         console.error("Erreur lors de la connexion :", err);
@@ -109,8 +126,31 @@ export const connexionController = {
         gender,
         interest: initialInterets,
       });
+//Création d'un token pour que la personne soit connecté une fois inscrite
 
-      res.status(201).json(newUser);
+      const payload = {
+        id: newUser.id,
+        pseudo: newUser.pseudo,
+      };
+
+      const token = generateToken(payload);
+      const refreshToken = generateRefreshToken({ id: newUser.id });
+
+      // Supprimer d’éventuels anciens tokens (par précaution)
+      await RefreshToken.destroy({ where: { userId: newUser.id } });
+      //Créer le token
+      await RefreshToken.create({ token: refreshToken, userId: newUser.id });
+      
+      //on envoi le token en httpOnly cookie
+      const isProd = process.env.NODE_ENV === 'production';
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: 'Strict',              //protège contre les csrf
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+      });
+
+      res.status(201).json({ user: newUser, token });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Erreur Serveur" });

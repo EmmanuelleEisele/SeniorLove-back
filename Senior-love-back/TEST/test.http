@@ -1,12 +1,12 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJhbGFpbjY5QGV4YW1wbGUuY29tIiwicHNldWRvIjoiYWxhaW42OSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU2MzY5MjYyLCJleHAiOjE3NTY0NTU2NjJ9.TfqYEXEdqpfx88B2hfnPiP6vbEMTr1rzuQ1aTVfNzpM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInBzZXVkbyI6IlRva2VuVGVzdCIsImlhdCI6MTc1NjcyNDAzMCwiZXhwIjoxNzU2NzI0OTMwfQ.y3baenTwMCRfqXxdaAyP692n3rzRv2wkXaBhrr2VnT4
 POST http://localhost:3000/register
 content-type: application/json
 
 {
-    "pseudo": "Anna",
-    "email": "annaE@example.com",
-    "password": "annaEpass",
-    "confirmPassword": "annaEpass",
+    "pseudo": "TokenTest",
+    "email": "Tokentest@example.com",
+    "password": "Tokenpass",
+    "confirmPassword": "Tokenpass",
     "birth_date": "1955-03-18"
 }
 
