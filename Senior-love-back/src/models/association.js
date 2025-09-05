@@ -4,6 +4,7 @@ import { Event } from "./Event.js";
 import { Localisation } from "./Localisation.js";
 import { Category } from "./Category.js";
 import { Conversation } from "./Conversation.js";
+import { RefreshToken } from "./RefreshToken.js";
 
 //User 0,N -> Activity 0,N
 User.belongsToMany(Activity, {
@@ -109,4 +110,16 @@ Localisation.hasMany(Event, {
     as: "events",
 });
 
-export { Activity, User, Event, Localisation, Category, Conversation };
+// User 1,1 -> RefreshToken 0,N
+User.hasMany(RefreshToken, {
+    foreignKey: "userId",
+    as: "refreshTokens",
+    onDelete: "CASCADE",
+});
+
+RefreshToken.belongsTo(User, {
+    foreignKey: "userId",
+    as: "user",
+});
+
+export { Activity, User, Event, Localisation, Category, Conversation, RefreshToken };
