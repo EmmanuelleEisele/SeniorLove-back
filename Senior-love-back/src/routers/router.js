@@ -139,6 +139,49 @@ router.post("/debug-validation", (req, res) => {
   }
 });
 
+// Endpoint de debug pour simuler exactement le login
+router.post("/debug-login", validate(connexionSchema), async (req, res) => {
+  try {
+    const { email, password } = req.validatedData;
+    console.log('🔍 Debug login - Données validées:', { email, password });
+
+    // Vérification de l'utilisateur
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      console.log('❌ Utilisateur non trouvé pour email:', email);
+      return res.json({ step: 'user_not_found', email });
+    }
+    console.log('✅ Utilisateur trouvé:', user.pseudo);
+
+    // Vérification du mot de passe
+    const isMatch = await argon2.verify(user.password, password);
+    console.log('🔑 Vérification mot de passe:', isMatch);
+    
+    if (!isMatch) {
+      console.log('❌ Mot de passe incorrect');
+      return res.json({ step: 'password_incorrect', email });
+    }
+
+    console.log('✅ Connexion réussie pour:', user.pseudo);
+    res.json({
+      step: 'success',
+      user: {
+        id: user.id,
+        email: user.email,
+        pseudo: user.pseudo,
+        role: user.role,
+      }
+    });
+  } catch (err) {
+    console.error("❌ Erreur dans debug-login :", err);
+    res.status(500).json({
+      step: 'error',
+      error: err.message,
+      stack: err.stack
+    });
+  }
+});
+
 // route de test /accueil back
 router.get("/", (req, res) => {
   res.send(
