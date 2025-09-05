@@ -182,6 +182,54 @@ router.post("/debug-login", validate(connexionSchema), async (req, res) => {
   }
 });
 
+// Endpoint de debug pour la connexion réelle
+router.post("/debug-login-real", validate(connexionSchema), async (req, res) => {
+  try {
+    console.log('🔍 Test de connexion réelle avec RefreshToken');
+    const { email, password } = req.validatedData;
+    
+    // Test 1: Vérifier l'utilisateur
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(400).json({ error: "Utilisateur non trouvé" });
+    }
+    console.log('✅ Utilisateur trouvé:', user.pseudo);
+    
+    // Test 2: Vérifier le mot de passe
+    const isMatch = await argon2.verify(user.password, password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Mot de passe incorrect" });
+    }
+    console.log('✅ Mot de passe correct');
+    
+    // Test 3: Importer RefreshToken depuis association
+    const { RefreshToken } = await import("../models/association.js");
+    console.log('✅ RefreshToken importé depuis association');
+    
+    // Test 4: Supprimer les anciens refresh tokens
+    const deletedCount = await RefreshToken.destroy({ where: { userId: user.id } });
+    console.log('✅ Anciens tokens supprimés:', deletedCount);
+    
+    // Test 5: Créer un nouveau refresh token
+    const refreshTokenValue = 'test-refresh-token-' + Date.now();
+    const newToken = await RefreshToken.create({ token: refreshTokenValue, userId: user.id });
+    console.log('✅ Nouveau token créé:', newToken.id);
+    
+    return res.json({ 
+      success: true, 
+      message: "Tous les tests passés",
+      user: { id: user.id, email: user.email, pseudo: user.pseudo }
+    });
+    
+  } catch (err) {
+    console.error('❌ Erreur dans debug-login-real:', err);
+    return res.status(500).json({ 
+      error: err.message,
+      stack: err.stack
+    });
+  }
+});
+
 // route de test /accueil back
 router.get("/", (req, res) => {
   res.send(
