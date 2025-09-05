@@ -65,6 +65,38 @@ router.get("/debug-users", async (req, res) => {
   }
 });
 
+// Endpoint de debug pour tester la recherche d'un utilisateur
+router.get("/debug-user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ 
+      where: { email },
+      attributes: ['id', 'email', 'pseudo', 'firstname', 'lastname', 'password']
+    });
+    
+    if (!user) {
+      return res.json({ found: false, email });
+    }
+    
+    res.json({
+      found: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        pseudo: user.pseudo,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        hasPassword: !!user.password,
+        passwordLength: user.password ? user.password.length : 0
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
 // route de test /accueil back
 router.get("/", (req, res) => {
   res.send(
