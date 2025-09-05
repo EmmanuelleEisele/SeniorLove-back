@@ -46,6 +46,25 @@ router.get("/debug-db", async (req, res) => {
   }
 });
 
+// Endpoint de debug pour lister les utilisateurs
+router.get("/debug-users", async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'email', 'pseudo', 'firstname', 'lastname'],
+      limit: 10
+    });
+    
+    res.json({
+      count: users.length,
+      users: users
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
 // route de test /accueil back
 router.get("/", (req, res) => {
   res.send(
