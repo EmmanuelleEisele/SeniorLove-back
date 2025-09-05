@@ -3,8 +3,8 @@ const testRailwayLogin = async () => {
   
   const url = 'https://seniorlove.up.railway.app/login';
   const credentials = {
-    email: 'jean55@example.com',
-    password: 'jeanpass'
+    email: 'marie62@example.com',
+    password: 'mariepass'
   };
 
   try {

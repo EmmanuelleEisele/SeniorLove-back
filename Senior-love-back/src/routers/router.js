@@ -124,6 +124,21 @@ router.post("/debug-password", async (req, res) => {
   }
 });
 
+// Endpoint de debug pour tester la validation
+router.post("/debug-validation", (req, res) => {
+  try {
+    res.json({
+      body: req.body,
+      headers: req.headers,
+      contentType: req.get('Content-Type')
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
 // route de test /accueil back
 router.get("/", (req, res) => {
   res.send(
