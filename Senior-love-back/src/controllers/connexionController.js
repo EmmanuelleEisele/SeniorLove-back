@@ -155,4 +155,33 @@ export const connexionController = {
       res.status(500).json({ message: "Erreur Serveur" });
     }
   },
+
+  async logout(req, res, next) {
+    try {
+      // Récupérer le refresh token depuis les cookies
+      const refreshToken = req.cookies.refreshToken;
+      
+      if (refreshToken) {
+        // Supprimer le refresh token de la base de données
+        await RefreshToken.destroy({ 
+          where: { token: refreshToken } 
+        });
+      }
+      
+      // Supprimer le cookie
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict'
+      });
+      
+      return res.status(200).json({ 
+        message: "Déconnexion réussie" 
+      });
+      
+    } catch (err) {
+      console.error("Erreur lors de la déconnexion :", err);
+      return next(new UnauthorizedError("Erreur lors de la déconnexion"));
+    }
+  },
 };
