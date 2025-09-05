@@ -35,7 +35,10 @@ router.get("/debug-db", async (req, res) => {
       userCount,
       databaseUrl,
       pgUrl,
-      usedUrl: process.env.DATABASE_URL || process.env.PG_URL
+      usedUrl: process.env.DATABASE_URL || process.env.PG_URL,
+      jwtSecret: process.env.JWT_SECRET ? 'JWT_SECRET is set' : 'JWT_SECRET not set',
+      jwtRefreshSecret: process.env.JWT_REFRESH_SECRET ? 'JWT_REFRESH_SECRET is set' : 'JWT_REFRESH_SECRET not set',
+      nodeEnv: process.env.NODE_ENV || 'development'
     });
   } catch (error) {
     res.status(500).json({
@@ -176,6 +179,77 @@ router.post("/debug-login", validate(connexionSchema), async (req, res) => {
     console.error("❌ Erreur dans debug-login :", err);
     res.status(500).json({
       step: 'error',
+      error: err.message,
+      stack: err.stack
+    });
+  }
+});
+
+// Endpoint de debug complet reproduisant exactement la logique du controller
+router.post("/debug-controller", validate(connexionSchema), async (req, res) => {
+  try {
+    console.log('🔍 Test complet simulant le controller');
+    const { email, password } = req.validatedData;
+    
+    // Importer les dépendances exactement comme dans le controller
+    const { generateRefreshToken, generateToken } = await import("../helper/JWT.js");
+    const { User, RefreshToken } = await import("../models/association.js");
+    
+    // Vérification de l'utilisateur
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+    }
+    
+    // Vérification du mot de passe
+    const isMatch = await argon2.verify(user.password, password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+    }
+    
+    const payload = {
+      id: user.id,
+      pseudo: user.pseudo,
+      role: user.role,
+    };
+    
+    // Token
+    const token = generateToken(payload);
+    const refreshToken = generateRefreshToken({ id: user.id });
+    
+    console.log('🔑 Tokens générés');
+    
+    // Supprimer les anciens refresh tokens
+    await RefreshToken.destroy({ where: { userId: user.id } });
+    console.log('🗑️ Anciens tokens supprimés');
+    
+    // Créer un nouveau refresh token
+    await RefreshToken.create({ token: refreshToken, userId: user.id });
+    console.log('✅ Nouveau token créé');
+    
+    // Cookie (simulation production)
+    const isProd = process.env.NODE_ENV === 'production';
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'Strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+    });
+    
+    return res.status(200).json({
+      message: "Connexion réussie",
+      user: {
+        id: user.id,
+        email: user.email,
+        pseudo: user.pseudo,
+        role: user.role,
+      },
+      token,
+    });
+    
+  } catch (err) {
+    console.error('❌ Erreur dans debug-controller:', err);
+    return res.status(500).json({ 
       error: err.message,
       stack: err.stack
     });
