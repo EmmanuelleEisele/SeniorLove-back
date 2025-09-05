@@ -18,6 +18,7 @@ import { createMessageSchema } from "../schemas/message.schema.js";
 import { errorMiddleware } from "../middleware/error.middleware.js";
 import { User } from "../models/User.js";
 import { sequelize } from "../models/sequelize.js";
+import argon2 from "argon2";
 
 export const router = new Router();
 
@@ -89,6 +90,32 @@ router.get("/debug-user/:email", async (req, res) => {
         hasPassword: !!user.password,
         passwordLength: user.password ? user.password.length : 0
       }
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
+// Endpoint de debug pour tester la vérification du mot de passe
+router.post("/debug-password", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+    
+    if (!user) {
+      return res.json({ found: false, email });
+    }
+    
+    const isMatch = await argon2.verify(user.password, password);
+    
+    res.json({
+      found: true,
+      email: user.email,
+      pseudo: user.pseudo,
+      passwordMatch: isMatch,
+      testedPassword: password
     });
   } catch (error) {
     res.status(500).json({
