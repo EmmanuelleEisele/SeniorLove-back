@@ -1,9 +1,8 @@
 import { generateRefreshToken, generateToken } from "../helper/JWT.js";
 import {  ConflictError, UnauthorizedError } from "../middleware/error.js";
-import { Activity, Category, User } from "../models/association.js";
+import { Activity, Category, User, RefreshToken } from "../models/association.js";
 import argon2 from "argon2";
 import validator from "validator";
-import { RefreshToken } from "../models/RefreshToken.js";
 
 export const connexionController = {
   async login(req, res, next) {
