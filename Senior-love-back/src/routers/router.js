@@ -16,8 +16,35 @@ import { upload } from "../middleware/upload.js";
 import { messageController } from "../controllers/messageController.js";
 import { createMessageSchema } from "../schemas/message.schema.js";
 import { errorMiddleware } from "../middleware/error.middleware.js";
+import { User } from "../models/User.js";
+import { sequelize } from "../models/sequelize.js";
 
 export const router = new Router();
+
+// Endpoint de debug temporaire pour tester la DB
+router.get("/debug-db", async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    const userCount = await User.count();
+    const databaseUrl = process.env.DATABASE_URL ? 'DATABASE_URL is set' : 'DATABASE_URL not set';
+    const pgUrl = process.env.PG_URL ? 'PG_URL is set' : 'PG_URL not set';
+    
+    res.json({
+      status: 'connected',
+      userCount,
+      databaseUrl,
+      pgUrl,
+      usedUrl: process.env.DATABASE_URL || process.env.PG_URL
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message,
+      databaseUrl: process.env.DATABASE_URL ? 'DATABASE_URL is set' : 'DATABASE_URL not set',
+      pgUrl: process.env.PG_URL ? 'PG_URL is set' : 'PG_URL not set'
+    });
+  }
+});
 
 // route de test /accueil back
 router.get("/", (req, res) => {
