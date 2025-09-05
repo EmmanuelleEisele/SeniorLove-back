@@ -5,6 +5,8 @@ import { router } from './src/routers/router.js';
 import express from "express";
 import cors from 'cors';
 import { errorMiddleware } from './src/middleware/error.middleware.js';
+// Import des modèles pour initialiser les associations
+import './src/models/association.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -26,13 +28,17 @@ app.use(cors({
 
 
 app.use(express.json());
-app.use(router);
-app.use(errorMiddleware);
+
 // définition du dossier de fichiers statique
 app.use("/avatar", express.static("./public/avatar"));
 app.use("/uploads", express.static("uploads"));
 
+app.use(router);
+app.use(errorMiddleware);
+
 
 app.listen(PORT, () => {
     console.log(`Server ready at http://localhost:${PORT}`);
-  });
+}).on('error', (err) => {
+    console.error('Erreur serveur:', err);
+});
