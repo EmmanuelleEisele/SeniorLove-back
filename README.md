@@ -23,20 +23,6 @@ L’API gère l’authentification sécurisée, la gestion des utilisateurs, la 
 
 ---
 
-## Structure du projet
-
-src/
-├── controllers/ # Logique métier (users, auth, messages, events…)
-├── models/ # Modèles Sequelize
-├── middleware/ # Middlewares (auth, validate, errors, upload…)
-├── schemas/ # Schémas de validation Zod
-├── routes/ # Définition des endpoints
-├── helper/ # Outils (JWT, hash, etc.)
-└── index.ts # Point d’entrée du serveur
-
-
----
-
 ## Installation et lancement
 
 ### 1️ Cloner le projet
