@@ -41,6 +41,7 @@ export const connexionController = {
         httpOnly: true,
         secure: true,
         sameSite: 'none',    //protège contre les csrf
+        partitioned: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
       });
 
@@ -146,6 +147,7 @@ export const connexionController = {
         httpOnly: true,
         secure: isProd,
         sameSite: 'Strict',              //protège contre les csrf
+        partitioned: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
       });
 
