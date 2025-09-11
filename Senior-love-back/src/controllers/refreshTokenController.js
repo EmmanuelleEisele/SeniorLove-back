@@ -5,9 +5,15 @@ import { UnauthorizedError } from "../middleware/error.js";
 export const refreshTokenController = {
   async refresh(req, res, next) {
     try {
+      console.log('🔄 Tentative de refresh token');
+      console.log('Cookies reçus:', req.cookies);
+      
       // 1. Récupérer le refreshToken depuis le cookie
       const refreshToken = req.cookies.refreshToken;
+      console.log('RefreshToken trouvé:', refreshToken ? 'Oui' : 'Non');
+      
       if (!refreshToken) {
+        console.log('❌ Aucun refresh token dans les cookies');
         return next(new UnauthorizedError("Aucun refresh token fourni"));
       }
 
@@ -15,7 +21,10 @@ export const refreshTokenController = {
       const storedToken = await RefreshToken.findOne({
         where: { token: refreshToken },
       });
+      console.log('Token en base:', storedToken ? 'Trouvé' : 'Pas trouvé');
+      
       if (!storedToken) {
+        console.log('❌ Refresh token pas en base');
         return next(new UnauthorizedError("Refresh token invalide ou révoqué"));
       }
 
@@ -43,9 +52,8 @@ export const refreshTokenController = {
         role: user.role,
       };
       const newAccessToken = generateToken(payload);
-console.log('RefreshToken reçu:', req.cookies.refreshToken);
-const tokenDb = await RefreshToken.findOne({ where: { token: req.cookies.refreshToken } });
-console.log('En base:', tokenDb);
+      console.log('✅ Nouveau access token généré');
+
       // 6. Répondre avec le nouveau token
       return res.status(200).json({ token: newAccessToken });
 
