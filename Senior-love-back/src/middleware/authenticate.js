@@ -12,6 +12,6 @@ export const authenticate = (req, _, next) => {
         req.user = user;
         next();
     } catch (err) {
-        return next(new jwtError("token invalide ou expiré"));
+        return next(new jwtError("token invalide ou expiré"), err);
     }
 };
