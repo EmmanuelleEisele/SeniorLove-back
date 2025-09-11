@@ -36,11 +36,11 @@ export const connexionController = {
       await RefreshToken.create({ token: refreshToken, userId: user.id });
 
       //on envoi le token en httpOnly cookie
-      const isProd = process.env.NODE_ENV === 'production';
+      //const isProd = process.env.NODE_ENV === 'production';
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: isProd,
-        sameSite: 'Strict',              //protège contre les csrf
+        secure: true,
+        sameSite: 'none',    //protège contre les csrf
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
       });
 

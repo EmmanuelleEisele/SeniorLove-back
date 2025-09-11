@@ -16,6 +16,7 @@ import { upload } from "../middleware/upload.js";
 import { messageController } from "../controllers/messageController.js";
 import { createMessageSchema } from "../schemas/message.schema.js";
 import { errorMiddleware } from "../middleware/error.middleware.js";
+import { refreshTokenController } from "../controllers/refreshTokenController.js";
 
 export const router = new Router();
 
@@ -98,6 +99,8 @@ router
     isAdmin,
     eventController.create
   );
+
+router.post("/refresh-token", refreshTokenController.refresh);
 
 // gestion des erreurs
 router.use(errorMiddleware);
