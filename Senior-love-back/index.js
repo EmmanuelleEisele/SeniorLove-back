@@ -7,6 +7,7 @@ import cors from 'cors';
 import { errorMiddleware } from './src/middleware/error.middleware.js';
 // Import des modèles pour initialiser les associations
 import './src/models/association.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -28,6 +29,7 @@ app.use(cors({
 
 
 app.use(express.json());
+app.use(cookieParser());
 
 // définition du dossier de fichiers statique
 app.use("/avatar", express.static("./public/avatar"));

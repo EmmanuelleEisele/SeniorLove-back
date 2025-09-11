@@ -1,6 +1,5 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInBzZXVkbyI6IlRva2VuVGVzdCIsImlhdCI6MTc1NjcyNDAzMCwiZXhwIjoxNzU2NzI0OTMwfQ.y3baenTwMCRfqXxdaAyP692n3rzRv2wkXaBhrr2VnT4
-POST http://localhost:3000/register
-content-type: application/json
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwicHNldWRvIjoiYWxhaW42OSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU3NTk3MzMxLCJleHAiOjE3NTc1OTgyMzF9.6-RV653zGB3lCD8Z7iEnjxSyQyCUzRCP6emAvBqViUw
+@refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzU3NTk3MzMxLCJleHAiOjE3NjAxODkzMzF9.eD-JwD9yHs-ZweruxYCSYSEQ-HhBMabGfdVXH-Ei6yo; Max-Age=604800; Path=/; Expires=Thu, 18 Sep 2025 13:28:51 GMT; HttpOnly; Secure; SameSite=None
 
 {
     "pseudo": "TokenTest",
@@ -19,6 +18,14 @@ content-type: application/json
     "email": "alain69@example.com",
     "password": "alainpass"
 }
+
+#fin
+###
+POST http://localhost:3000/refresh-token
+Content-Type: application/json
+Cookie: refreshToken={{refreshToken}}
+
+{}
 
 #fin
 ###

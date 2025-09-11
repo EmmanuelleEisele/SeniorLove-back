@@ -43,7 +43,9 @@ export const refreshTokenController = {
         role: user.role,
       };
       const newAccessToken = generateToken(payload);
-
+console.log('RefreshToken reçu:', req.cookies.refreshToken);
+const tokenDb = await RefreshToken.findOne({ where: { token: req.cookies.refreshToken } });
+console.log('En base:', tokenDb);
       // 6. Répondre avec le nouveau token
       return res.status(200).json({ token: newAccessToken });
 
