@@ -4,7 +4,7 @@ const SECRET = process.env.JWT_SECRET;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 
 // Génère un access token (court terme)
-export const generateToken=(payload, expiresIn = '15m')=>{
+export const generateToken=(payload, expiresIn = '1m')=>{
     return jwt.sign(payload, SECRET, {expiresIn}) 
 }
 
