@@ -60,6 +60,46 @@ router.route("/profile/:pseudo").get(authenticate, profileController.getOne);
 router.route("/meet").get(authenticate, profileController.getAll);
 
 // Page des contacts avec qui l'utilisateur à échangé des messages
+// Debug endpoint pour tester messaging
+router.get("/debug-messaging", authenticate, async (req, res) => {
+  try {
+    console.log('🔍 Debug messaging - User:', req.user);
+    const userId = req.user.id;
+    
+    // Test 1: Import des modèles
+    const { Conversation, User } = await import("../models/association.js");
+    console.log('✅ Modèles importés');
+    
+    // Test 2: Recherche conversations sender
+    const sender = await Conversation.findAll({
+      where: { sender_id: userId },
+      attributes: ["receiver_id"],
+    });
+    console.log('✅ Sender conversations:', sender.length);
+    
+    // Test 3: Recherche conversations receiver  
+    const receiver = await Conversation.findAll({
+      where: { receiver_id: userId },
+      attributes: ["sender_id"],
+    });
+    console.log('✅ Receiver conversations:', receiver.length);
+    
+    return res.json({
+      success: true,
+      userId,
+      senderCount: sender.length,
+      receiverCount: receiver.length
+    });
+    
+  } catch (err) {
+    console.error('❌ Erreur debug messaging:', err);
+    return res.status(500).json({ 
+      error: err.message,
+      stack: err.stack
+    });
+  }
+});
+
 router.route("/messaging").get(authenticate, messageController.getContacts);
 
 // Page de la messagerie avec historique de conversation
